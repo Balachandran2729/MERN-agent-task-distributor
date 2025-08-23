@@ -1,52 +1,41 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 require('dotenv').config();
-mongoose.connect(process.env.MONGODB_URI);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskdistribution');
 
 const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-}, {
-  timestamps: true
-});
-
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
-    return next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+  email: String,
+  password: String
 });
 
 const User = mongoose.model('User', userSchema);
 
 const createAdmin = async () => {
   try {
-    // Delete existing users
+    // Clear existing users
     await User.deleteMany({});
     
-    // Create new admin
+    // Hash password
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+    
+    // Create admin user
     const admin = new User({
       email: 'admin@example.com',
-      password: 'admin123'
+      password: hashedPassword
     });
     
     await admin.save();
-    console.log('Admin user created successfully!');
+    console.log('✅ Admin user created successfully!');
     console.log('Email: admin@example.com');
     console.log('Password: admin123');
+    
     process.exit();
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error creating admin:', error);
     process.exit(1);
   }
 };
+
 createAdmin();
