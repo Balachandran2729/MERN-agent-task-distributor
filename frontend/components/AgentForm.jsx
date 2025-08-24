@@ -23,26 +23,6 @@ export function AgentForm({ onAgentAdded }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate required fields
-    if (!formData.name || !formData.email || !formData.mobile || !formData.password) {
-      toast.error('Please fill in all required fields');
-      return;
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      toast.error('Please enter a valid email address');
-      return;
-    }
-
-    // Validate password length
-    if (formData.password.length < 6) {
-      toast.error('Password must be at least 6 characters long');
-      return;
-    }
-
     setLoading(true);
 
     try {
@@ -75,7 +55,7 @@ export function AgentForm({ onAgentAdded }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-dark-300 mb-1">
-            Full Name *
+            Full Name
           </label>
           <Input
             name="name"
@@ -88,7 +68,7 @@ export function AgentForm({ onAgentAdded }) {
 
         <div>
           <label className="block text-sm font-medium text-dark-300 mb-1">
-            Email Address *
+            Email Address
           </label>
           <Input
             name="email"
@@ -102,7 +82,7 @@ export function AgentForm({ onAgentAdded }) {
 
         <div>
           <label className="block text-sm font-medium text-dark-300 mb-1">
-            Mobile Number *
+            Mobile Number
           </label>
           <Input
             name="mobile"
@@ -115,7 +95,7 @@ export function AgentForm({ onAgentAdded }) {
 
         <div>
           <label className="block text-sm font-medium text-dark-300 mb-1">
-            Password *
+            Password
           </label>
           <Input
             name="password"

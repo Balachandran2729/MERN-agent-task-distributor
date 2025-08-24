@@ -95,7 +95,7 @@ export function UploadForm({ onUploadSuccess }) {
             className="cursor-pointer text-sm text-dark-300 hover:text-white"
           >
             <span className="font-medium text-primary-400 hover:text-primary-300">
-              Click to <span className='text-[16px] font-bold'>upload</span> 
+              Click to upload
             </span>{' '}
             or drag and drop
           </label>
